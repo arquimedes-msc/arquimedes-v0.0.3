@@ -1,0 +1,1 @@
+ALTER TABLE `exercise_completions` ADD `pointsEarned` int DEFAULT 0;

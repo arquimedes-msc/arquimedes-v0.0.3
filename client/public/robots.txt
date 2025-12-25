@@ -1,0 +1,29 @@
+# Robots.txt para Arquimedes - Plataforma Educacional de Matemática
+# https://arquimedes.manus.space
+
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /disciplina/
+Allow: /sala-de-exercicios
+Allow: /exercicios-interativos
+Allow: /videos
+Allow: /laboratorio
+
+# Páginas que requerem autenticação (não indexar)
+Disallow: /dashboard
+Disallow: /perfil
+Disallow: /conquistas
+Disallow: /exercicios-resolvidos
+Disallow: /estatisticas
+Disallow: /admin
+
+# Arquivos de sistema
+Disallow: /api/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://arquimedes.manus.space/sitemap.xml
+
+# Crawl-delay para não sobrecarregar o servidor
+Crawl-delay: 1
