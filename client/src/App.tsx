@@ -20,11 +20,13 @@ import AchievementsPage from "./pages/AchievementsPage";
 import AdminPage from "./pages/AdminPage";
 import ExercisesCompletedPage from "./pages/ExercisesCompletedPage";
 import MathLabPage from "./pages/MathLabPage";
+import MagicGuardianPage from "./pages/MagicGuardianPage";
 import { SoundToggle } from "./components/SoundToggle";
 
 function Router() {
   return (
     <Switch>
+      <Route path="/prototype/magic-guardian" component={MagicGuardianPage} />
       <Route path="/" component={LoginPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/dashboard" component={Dashboard} />
