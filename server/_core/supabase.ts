@@ -1,23 +1,58 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Configuração do Supabase
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://njwaigzkmzhtwvxumpsg.supabase.co';
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'sb_publishable_TAy7GsDpxc--jY8s49H03Q_jwOIDeqO';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_AplbxpeLKzk4bEcAqFa5xg_qXA57CWT';
+type SupabaseEnv = {
+  url: string;
+  anonKey: string;
+  serviceKey: string;
+  databaseUrl: string;
+};
 
-// Cliente público (para operações do lado do cliente)
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let cachedConfig: SupabaseEnv | null = null;
 
-// Cliente admin (para operações privilegiadas no servidor)
-export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
+function loadSupabaseEnv(): SupabaseEnv {
+  if (cachedConfig) return cachedConfig;
+
+  const config = {
+    url: process.env.SUPABASE_URL,
+    anonKey: process.env.SUPABASE_ANON_KEY,
+    serviceKey: process.env.SUPABASE_SERVICE_KEY,
+    databaseUrl: process.env.SUPABASE_DATABASE_URL
+  } satisfies Partial<SupabaseEnv>;
+
+  const missing = Object.entries(config)
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missing.length) {
+    throw new Error(`[Supabase] Variáveis de ambiente obrigatórias ausentes: ${missing.join(', ')}`);
   }
-});
 
-// String de conexão PostgreSQL para Drizzle
-export const SUPABASE_DATABASE_URL = process.env.SUPABASE_DATABASE_URL || 
-  `postgresql://postgres:Msc@2025@db.njwaigzkmzhtwvxumpsg.supabase.co:5432/postgres`;
+  cachedConfig = config as SupabaseEnv;
+  return cachedConfig;
+}
 
-console.log('[Supabase] Cliente inicializado:', SUPABASE_URL);
+export function createSupabaseClient() {
+  const { url, anonKey } = loadSupabaseEnv();
+  return createClient(url, anonKey);
+}
+
+export function createSupabaseAdminClient() {
+  const { url, serviceKey } = loadSupabaseEnv();
+  return createClient(url, serviceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  });
+}
+
+export function getSupabaseDatabaseUrl() {
+  return loadSupabaseEnv().databaseUrl;
+}
+
+// Instâncias padrão (úteis para rotinas que dependem do Supabase)
+export const supabase = createSupabaseClient();
+export const supabaseAdmin = createSupabaseAdminClient();
+export const SUPABASE_DATABASE_URL = getSupabaseDatabaseUrl();
+
+console.log('[Supabase] Cliente inicializado:', loadSupabaseEnv().url);

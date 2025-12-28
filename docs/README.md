@@ -49,13 +49,9 @@ Estratégias de marketing digital, SEO e crescimento orgânico.
   - Métricas de sucesso e KPIs
 
 ### 🚀 Deploy e Infraestrutura ([deploy/](deploy/))
-Guias de deploy em diferentes plataformas e configuração de CI/CD.
+Guias de deploy e configuração de CI/CD.
 
-- **[DEPLOY.md](deploy/DEPLOY.md)** - Guia geral de deploy
-- **[DEPLOY_GITHUB.md](deploy/DEPLOY_GITHUB.md)** - Deploy via GitHub Pages/Actions
-- **[DEPLOY_HOSTINGER.md](deploy/DEPLOY_HOSTINGER.md)** - Deploy em Hostinger
-- **[DEPLOY_RAPIDO.md](deploy/DEPLOY_RAPIDO.md)** - Guia rápido de deploy
-- **[GITHUB_PUSH.md](deploy/GITHUB_PUSH.md)** - Instruções para push no GitHub
+- **[DEPLOY_HOSTINGER.md](deploy/DEPLOY_HOSTINGER.md)** - Deploy na VPS da Hostinger com Supabase (passo a passo)
 
 ### 📝 Conteúdo Educacional ([conteudo/](conteudo/))
 Documentação sobre criação e expansão de conteúdo educacional.

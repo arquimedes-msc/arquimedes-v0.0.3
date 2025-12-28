@@ -369,6 +369,10 @@ pnpm install
 # Configurar variáveis de ambiente
 cp .env.example .env
 # Editar .env com suas credenciais
+# - Para Supabase (ex.: deploy na Hostinger), defina DB_MODE=supabase e preencha
+#   SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY e SUPABASE_DATABASE_URL
+# - Para usar Manus/MySQL local, mantenha DB_MODE=manus e ajuste DATABASE_URL
+# - Guia passo a passo de VPS Hostinger: docs/deploy/DEPLOY_HOSTINGER.md
 
 # Executar migrations do banco
 pnpm db:push
